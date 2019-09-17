@@ -26,7 +26,7 @@ func NewNodesCommand(o *NodesOption) *cobra.Command {
 	fset := cmd.Flags()
 	fset.StringVar(&o.host, "host", "", "Elasticsearch host")
 	fset.IntVar(&o.port, "port", 9200, "Elasticsearch port")
-	fset.StringVarP(&o.configFile, "config_file", "f", ".escale.yaml", "Configuration file to read in")
+	fset.StringVarP(&o.configFile, "config-file", "f", ".escale.yaml", "Configuration file to read in")
 	return cmd
 }
 

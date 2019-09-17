@@ -10,7 +10,7 @@ import (
 type Config struct {
 	Host             string `yaml:"url"`
 	Port             int    `yaml:"port"`
-	AutoScalingGroup string `yaml:"auto_scaling_group"`
+	AutoScalingGroup string `yaml:"autoScalingGroup"`
 }
 
 type ErrFileNotExist struct {
