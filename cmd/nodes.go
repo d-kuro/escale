@@ -3,8 +3,9 @@ package cmd
 import (
 	"errors"
 
+	"github.com/d-kuro/escale/pkg/elasticsearch"
+
 	"github.com/d-kuro/escale/pkg/log"
-	"github.com/github/vulcanizer"
 	"github.com/spf13/cobra"
 )
 
@@ -38,8 +39,8 @@ func runNodesCommand(o *NodesOption) error {
 		return err
 	}
 
-	v := vulcanizer.NewClient(o.host, o.port)
-	nodes, err := v.GetNodes()
+	client := elasticsearch.NewClient(o.host, o.port)
+	nodes, err := client.GetNodes()
 	if err != nil {
 		return err
 	}
