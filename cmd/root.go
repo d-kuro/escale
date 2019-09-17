@@ -39,5 +39,6 @@ func addCommands(rootCmd *cobra.Command) {
 	rootCmd.AddCommand(
 		NewVersionCommand(),
 		NewNodesCommand(&NodesOption{}),
+		NewAddCommand(&AddOption{}),
 	)
 }
