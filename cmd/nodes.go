@@ -16,8 +16,8 @@ func NewNodesCommand(o *NodesOption) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "nodes",
 		Short: "List Elasticsearch nodes",
-		Run: func(cmd *cobra.Command, args []string) {
-			runNodesCommand(o)
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return runNodesCommand(o)
 		},
 	}
 	fset := cmd.Flags()

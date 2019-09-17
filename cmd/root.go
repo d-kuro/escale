@@ -1,10 +1,7 @@
 package cmd
 
 import (
-	"io"
-
 	"github.com/d-kuro/escale/pkg/log"
-
 	"github.com/spf13/cobra"
 )
 
@@ -13,17 +10,11 @@ const (
 	exitCodeErr = 1
 )
 
-type Option struct {
-	outStream io.Writer
-	errStream io.Writer
-}
-
-func Execute(outStream, errStream io.Writer) int {
+func Execute() int {
 	log.NewStdLogger()
 
-	o := NewOption(outStream, errStream)
-	cmd := NewRootCommand(o)
-	addCommands(cmd, o)
+	cmd := NewRootCommand()
+	addCommands(cmd)
 
 	if err := cmd.Execute(); err != nil {
 		log.Logger.Errorf("error: %v", err)
@@ -32,7 +23,7 @@ func Execute(outStream, errStream io.Writer) int {
 	return exitCodeOK
 }
 
-func NewRootCommand(o *Option) *cobra.Command {
+func NewRootCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:           "escale",
 		Short:         "",
@@ -44,16 +35,9 @@ func NewRootCommand(o *Option) *cobra.Command {
 	}
 }
 
-func NewOption(outStream, errStream io.Writer) *Option {
-	return &Option{
-		outStream: outStream,
-		errStream: errStream,
-	}
-}
-
-func addCommands(rootCmd *cobra.Command, o *Option) {
+func addCommands(rootCmd *cobra.Command) {
 	rootCmd.AddCommand(
-		NewVersionCommand(o),
+		NewVersionCommand(),
 		NewNodesCommand(&NodesOption{}),
 	)
 }

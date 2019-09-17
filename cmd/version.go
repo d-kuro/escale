@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -10,16 +11,16 @@ const Version = "v0.0.1"
 
 var Revision = "development"
 
-func NewVersionCommand(o *Option) *cobra.Command {
+func NewVersionCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:   "version",
 		Short: "Show version",
 		Run: func(cmd *cobra.Command, args []string) {
-			runVersionCommand(o)
+			runVersionCommand()
 		},
 	}
 }
 
-func runVersionCommand(o *Option) {
-	fmt.Fprintf(o.outStream, "version: %s (rev: %s)\n", Version, Revision)
+func runVersionCommand() {
+	fmt.Fprintf(os.Stdout, "version: %s (rev: %s)\n", Version, Revision)
 }
