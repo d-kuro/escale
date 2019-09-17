@@ -76,7 +76,7 @@ func (o AddOption) validate() error {
 		return errors.New("host is required")
 	}
 	if o.autoScalingGroup == "" {
-		return errors.New("auto_scaling_group is required")
+		return errors.New("auto-scaling-group is required")
 	}
 	return nil
 }
