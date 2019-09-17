@@ -26,11 +26,11 @@ func Execute() int {
 func NewRootCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:           "escale",
-		Short:         "",
+		Short:         "Elasticsearch node controller with AWS Auto Scaling Group",
 		SilenceErrors: true,
 		SilenceUsage:  true,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return nil
+			return cmd.Usage()
 		},
 	}
 }
