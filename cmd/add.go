@@ -27,7 +27,7 @@ func NewAddCommand(o *AddOption) *cobra.Command {
 	fset.StringVar(&o.host, "host", "", "Elasticsearch host")
 	fset.IntVar(&o.port, "port", 9200, "Elasticsearch port")
 	fset.StringVarP(&o.autoScalingGroup, "auto-scaling-group", "g", "", "Auto Scaling Group name")
-	fset.IntVarP(&o.number, "number", "n", 1, "Number to add instances")
+	fset.IntVar(&o.number, "desired", 0, "Desired capacity")
 	fset.StringVar(&o.profile, "profile", "", "AWS profile name")
 	fset.StringVarP(&o.configFile, "config-file", "f", ".escale.yaml", "Configuration file to read in")
 	return cmd
