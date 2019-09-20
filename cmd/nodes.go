@@ -4,8 +4,8 @@ import (
 	"errors"
 
 	"github.com/d-kuro/escale/pkg/elasticsearch"
-
 	"github.com/d-kuro/escale/pkg/log"
+
 	"github.com/spf13/cobra"
 )
 

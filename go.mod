@@ -4,6 +4,7 @@ go 1.13
 
 require (
 	github.com/aws/aws-sdk-go v1.24.0
+	github.com/cenkalti/backoff v2.2.1+incompatible
 	github.com/elazarl/goproxy v0.0.0-20190911111923-ecfe977594f1 // indirect
 	github.com/github/vulcanizer v0.5.0
 	github.com/google/go-cmp v0.3.1 // indirect
