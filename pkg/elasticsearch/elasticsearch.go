@@ -11,6 +11,16 @@ func NewClient(host string, port int) *Client {
 	return &Client{client: v}
 }
 
-func (c *Client) GetNodes() ([]vulcanizer.Node, error) {
+func (c *Client) ListNodes() ([]vulcanizer.Node, error) {
 	return c.client.GetNodes()
+}
+
+func ListDataNodes(nodes []vulcanizer.Node) []vulcanizer.Node {
+	dataNodes := make([]vulcanizer.Node, 0, len(nodes)-1)
+	for _, node := range nodes {
+		if node.Master != "*" {
+			dataNodes = append(dataNodes, node)
+		}
+	}
+	return dataNodes
 }

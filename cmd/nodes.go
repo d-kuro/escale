@@ -40,7 +40,7 @@ func runNodesCommand(o *NodesOption) error {
 	}
 
 	client := elasticsearch.NewClient(o.host, o.port)
-	nodes, err := client.GetNodes()
+	nodes, err := client.ListNodes()
 	if err != nil {
 		return err
 	}

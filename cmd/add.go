@@ -113,7 +113,7 @@ func (o AddOption) validate() error {
 
 func getElasticsearchNodes(client *elasticsearch.Client, o *AddOption) func() error {
 	return func() error {
-		nodes, err := client.GetNodes()
+		nodes, err := client.ListNodes()
 		if err != nil {
 			return err
 		}
