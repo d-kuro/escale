@@ -15,6 +15,10 @@ func (c *Client) ListNodes() ([]vulcanizer.Node, error) {
 	return c.client.GetNodes()
 }
 
+func (c *Client) GetShardOverlap(nodes []string) (map[string]vulcanizer.ShardOverlap, error) {
+	return c.client.GetShardOverlap(nodes)
+}
+
 func ListDataNodes(nodes []vulcanizer.Node) []vulcanizer.Node {
 	dataNodes := make([]vulcanizer.Node, 0, len(nodes)-1)
 	for _, node := range nodes {
