@@ -1,6 +1,10 @@
 package elasticsearch
 
-import "github.com/github/vulcanizer"
+import (
+	"time"
+
+	"github.com/github/vulcanizer"
+)
 
 type Client struct {
 	client *vulcanizer.Client
@@ -8,6 +12,7 @@ type Client struct {
 
 func NewClient(host string, port int) *Client {
 	v := vulcanizer.NewClient(host, port)
+	v.Timeout = 5 * time.Second
 	return &Client{client: v}
 }
 
