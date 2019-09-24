@@ -1,6 +1,7 @@
 package elasticsearch
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/github/vulcanizer"
@@ -20,8 +21,8 @@ func (c *Client) ListNodes() ([]vulcanizer.Node, error) {
 	return c.client.GetNodes()
 }
 
-func (c *Client) GetShardOverlap(nodes []string) (map[string]vulcanizer.ShardOverlap, error) {
-	return c.client.GetShardOverlap(nodes)
+func (c *Client) GetShards(nodes []string) ([]vulcanizer.Shard, error) {
+	return c.client.GetShards(nodes)
 }
 
 func (c *Client) SetAllocation(allocation bool) (string, error) {
@@ -39,4 +40,13 @@ func ListDataNodes(nodes []vulcanizer.Node) []vulcanizer.Node {
 		}
 	}
 	return dataNodes
+}
+
+func GetNodeFromIP(ip string, nodes []vulcanizer.Node) (vulcanizer.Node, error) {
+	for _, node := range nodes {
+		if node.Ip == ip {
+			return node, nil
+		}
+	}
+	return vulcanizer.Node{}, fmt.Errorf("node not found IP: %s", ip)
 }

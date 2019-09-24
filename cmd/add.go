@@ -13,13 +13,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const maxRetry = 100
-
 type AddOption struct {
 	host             string
 	port             int
 	autoScalingGroup string
 	desired          int
+	maxRetry         uint64
+	delay            time.Duration
 	region           string
 	profile          string
 	configFile       string
@@ -38,6 +38,8 @@ func NewAddCommand(o *AddOption) *cobra.Command {
 	fset.IntVar(&o.port, "port", 9200, "Elasticsearch port")
 	fset.StringVarP(&o.autoScalingGroup, "auto-scaling-group", "g", "", "Auto Scaling Group name")
 	fset.IntVar(&o.desired, "desired", 0, "Desired capacity")
+	fset.Uint64Var(&o.maxRetry, "max-retry", 100, "Max retry count")
+	fset.DurationVar(&o.delay, "delay", 5*time.Second, "Delay between retries")
 	fset.StringVar(&o.region, "region", "", "AWS region")
 	fset.StringVar(&o.profile, "profile", "", "AWS profile name")
 	fset.StringVarP(&o.configFile, "config-file", "f", ".escale.yaml", "Configuration file to read in")
@@ -70,7 +72,7 @@ func runAddCommand(o *AddOption) error {
 	}
 
 	log.Logger.Printf("Waiting for nodes join to Elasticsearch cluster...")
-	backOff := backoff.WithMaxRetries(backoff.NewConstantBackOff(5*time.Second), maxRetry)
+	backOff := backoff.WithMaxRetries(backoff.NewConstantBackOff(o.delay), o.maxRetry)
 	if err := backoff.Retry(getElasticsearchNodes(esClient, o), backOff); err != nil {
 		return err
 	}
