@@ -24,6 +24,13 @@ func (c *Client) GetShardOverlap(nodes []string) (map[string]vulcanizer.ShardOve
 	return c.client.GetShardOverlap(nodes)
 }
 
+func (c *Client) SetAllocation(allocation bool) (string, error) {
+	if allocation {
+		return c.client.SetAllocation("enable")
+	}
+	return c.client.SetAllocation("disable")
+}
+
 func ListDataNodes(nodes []vulcanizer.Node) []vulcanizer.Node {
 	dataNodes := make([]vulcanizer.Node, 0, len(nodes)-1)
 	for _, node := range nodes {

@@ -53,6 +53,13 @@ func runAddCommand(o *AddOption) error {
 		return err
 	}
 
+	esClient := elasticsearch.NewClient(o.host, o.port)
+
+	log.Logger.Printf("Disable allocation for the cluster")
+	if _, err := esClient.SetAllocation(false); err != nil {
+		return err
+	}
+
 	sess, err := aws.NewSession(o.region, o.profile)
 	if err != nil {
 		return err
@@ -63,9 +70,13 @@ func runAddCommand(o *AddOption) error {
 	}
 
 	log.Logger.Printf("Waiting for nodes join to Elasticsearch cluster...")
-	esClient := elasticsearch.NewClient(o.host, o.port)
 	backOff := backoff.WithMaxRetries(backoff.NewConstantBackOff(5*time.Second), maxRetry)
 	if err := backoff.Retry(getElasticsearchNodes(esClient, o), backOff); err != nil {
+		return err
+	}
+
+	log.Logger.Printf("Enable allocation for the cluster")
+	if _, err := esClient.SetAllocation(true); err != nil {
 		return err
 	}
 	log.Logger.Printf("Finished")
