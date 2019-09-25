@@ -60,15 +60,10 @@ func runRemoveCommand(o *RemoveOption) error {
 		return err
 	}
 
-	log.Logger.Printf("List Elasticsearch data nodes")
 	esClient := elasticsearch.NewClient(o.host, o.port)
-	nodes, err := esClient.ListNodes()
+	dataNodes, err := listDataNodes(esClient)
 	if err != nil {
 		return err
-	}
-	dataNodes := elasticsearch.ListDataNodes(nodes)
-	for _, dataNode := range dataNodes {
-		log.Logger.Printf("%+v", dataNode)
 	}
 
 	var target vulcanizer.Node
@@ -181,6 +176,15 @@ func getShardsFromNodes(nodes []string, client *elasticsearch.Client) func() err
 	}
 }
 
-func listDataNodes() error {
-
+func listDataNodes(client *elasticsearch.Client) ([]vulcanizer.Node, error) {
+	log.Logger.Printf("List Elasticsearch data nodes")
+	nodes, err := client.ListNodes()
+	if err != nil {
+		return nil, err
+	}
+	dataNodes := elasticsearch.ListDataNodes(nodes)
+	for _, dataNode := range dataNodes {
+		log.Logger.Printf("%+v", dataNode)
+	}
+	return dataNodes, nil
 }
