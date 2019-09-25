@@ -25,6 +25,14 @@ func (c *Client) GetShards(nodes []string) ([]vulcanizer.Shard, error) {
 	return c.client.GetShards(nodes)
 }
 
+func (c *Client) DrainServer(nodeName string) (vulcanizer.ExcludeSettings, error) {
+	return c.client.DrainServer(nodeName)
+}
+
+func (c *Client) FillAll() (vulcanizer.ExcludeSettings, error) {
+	return c.client.FillAll()
+}
+
 func (c *Client) SetAllocation(allocation bool) (string, error) {
 	if allocation {
 		return c.client.SetAllocation("enable")
@@ -42,11 +50,11 @@ func ListDataNodes(nodes []vulcanizer.Node) []vulcanizer.Node {
 	return dataNodes
 }
 
-func GetNodeFromIP(ip string, nodes []vulcanizer.Node) (vulcanizer.Node, error) {
+func GetNodeFromName(name string, nodes []vulcanizer.Node) (vulcanizer.Node, error) {
 	for _, node := range nodes {
-		if node.Ip == ip {
+		if node.Name == name {
 			return node, nil
 		}
 	}
-	return vulcanizer.Node{}, fmt.Errorf("node not found IP: %s", ip)
+	return vulcanizer.Node{}, fmt.Errorf("node not found name: %s", name)
 }

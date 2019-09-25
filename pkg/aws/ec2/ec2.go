@@ -18,6 +18,18 @@ func NewClient(provider client.ConfigProvider) *Client {
 	return &Client{api: api}
 }
 
+func (c *Client) TerminateInstance(instanceID string) error {
+	req := &ec2.TerminateInstancesInput{
+		InstanceIds: []*string{
+			aws.String(instanceID),
+		},
+	}
+	if _, err := c.api.TerminateInstances(req); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (c *Client) RetrieveInstanceIDFromPrivateIP(privateIP string) (string, error) {
 	resp, err := c.api.DescribeInstances(&ec2.DescribeInstancesInput{
 		Filters: []*ec2.Filter{

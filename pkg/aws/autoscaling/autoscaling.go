@@ -55,3 +55,17 @@ func (c *Client) IncreaseInstances(groupName string, desired int64) error {
 
 	return nil
 }
+
+func (c *Client) DetachInstance(groupName string, instanceID string) error {
+	req := &autoscaling.DetachInstancesInput{
+		AutoScalingGroupName: aws.String(groupName),
+		InstanceIds: []*string{
+			aws.String(instanceID),
+		},
+		ShouldDecrementDesiredCapacity: aws.Bool(true),
+	}
+	if _, err := c.api.DetachInstances(req); err != nil {
+		return err
+	}
+	return nil
+}
