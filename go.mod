@@ -14,7 +14,7 @@ require (
 	github.com/pkg/errors v0.8.1 // indirect
 	github.com/smartystreets/goconvey v0.0.0-20190731233626-505e41936337 // indirect
 	github.com/spf13/cobra v0.0.5
-	github.com/tidwall/gjson v1.3.2 // indirect
+	github.com/tidwall/gjson v1.9.3 // indirect
 	golang.org/x/net v0.0.0-20190916140828-c8589233b77d // indirect
 	gopkg.in/yaml.v2 v2.2.2
 	gotest.tools v2.2.0+incompatible // indirect
